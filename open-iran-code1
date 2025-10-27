@@ -1,0 +1,26 @@
+#!/bin/bash
+sudo apt update
+# Install git and make
+sudo apt install -y git make
+
+# Clone udp2raw-tunnel repository
+git clone https://github.com/wangyu-/udp2raw-tunnel.git
+
+# Enter the udp2raw-tunnel directory
+cd udp2raw-tunnel
+
+# Install build-essential for compiling
+sudo apt install -y build-essential
+
+# Compile udp2raw
+make
+
+
+cd ..
+# Move udp2raw-tunnel directory to /usr/local/bin
+sudo mv udp2raw-tunnel/ /usr/local/bin/udp2raw-tunnel
+# Make udp2raw executable
+sudo chmod uo+x /usr/local/bin/udp2raw-tunnel/udp2raw
+
+# Set capabilities for udp2raw
+sudo setcap cap_net_raw+ep /usr/local/bin/udp2raw-tunnel/udp2raw
